@@ -1,16 +1,14 @@
-# React + Vite
+# Workspace
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+React + Vite app with Material UI authentication screens and a protected dashboard.
 
-Currently, two official plugins are available:
+Run `npm install`, then `npm run dev`. Validation: `npm run lint` and `npm run build`.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+Routes: `/#/login`, `/#/register`, `/#/forgot-password`, `/#/reset-password?token=...`, and `/#/dashboard`.
+Hash routing works on static hosting without rewrite rules.
 
-## React Compiler
+Shared components live in `src/components`, screens in `src/pages`, authentication in `src/auth`, and styling in `src/theme.js`.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Registration signs the user in. Sessions last 24 hours. Recovery displays a demo link valid for 15 minutes; resetting consumes the token and signs the user out. Forms validate names, email addresses, password length, and matching passwords.
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+This is frontend demo authentication. Accounts and sessions are stored in localStorage; passwords are salted and derived using PBKDF2. Reset links appear on screen instead of being emailed. Browser storage and frontend route guards are not security boundaries. For production, replace `src/auth/authService.js` with a backend API providing server validation, secure cookie sessions, password hashing, rate limiting, and emailed recovery tokens. Use test credentials only.
